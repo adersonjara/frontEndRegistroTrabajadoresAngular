@@ -1,0 +1,37 @@
+<div class="table-responsive mt-5">
+    <div *ngIf="trabajadores.length == 0" class="alert alert-warning">No hay registros!</div>
+    <table class="table table-hover" *ngIf="trabajadores.length>0">
+        <caption>Lista de Trabajadores</caption>
+    	<thead>
+    		<tr>
+    			<th>Id</th>
+    			<th>Nombres</th>
+    			<th>Apellidos</th>
+    			<th>Email</th>
+    			<th>Celular</th>
+    			<th>Edad</th>
+    			<th>Direccion</th>
+    			<th>Dni</th>
+    			<th>Fecha de Registro</th>
+                <th>Acciones</th>
+    		</tr>
+    	</thead>
+    	<tbody>
+    		<tr *ngFor="let trabajador of trabajadores">
+    			<td>{{ trabajador.id }}</td>
+    			<td>{{ trabajador.nombres }}</td>
+    			<td>{{ trabajador.apellidos }}</td>
+    			<td>{{ trabajador.email }}</td>
+    			<td>{{ trabajador.celular }}</td>
+    			<td>{{ trabajador.edad }}</td>
+    			<td>{{ trabajador.direccion }}</td>
+    			<td>{{ trabajador.dni }}</td>
+    			<td>{{ trabajador.createAt | date:'dd-MM-yyyy , HH:mm' }}</td>
+                <td>
+                    <button type="button" name="button" [routerLink]="['/trabajadores/form', trabajador.id]" class="btn btn-primary btn-sm">Editar</button>
+                    <button type="button" name="eliminar" (click)="delete(trabajador)" class="btn btn-danger btn-sm">Eliminar</button>
+                </td>
+    		</tr>
+    	</tbody>
+    </table>
+</div>

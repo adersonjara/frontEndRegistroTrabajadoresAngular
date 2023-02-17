@@ -1,0 +1,63 @@
+<div class="card navbar-light mb-3 mt-5" style="background-color: #e3f2fd;">
+	<div class="card-header" *ngIf="!trabajador.id else elseBlockTitulo">{{ titulo }}</div>
+	<ng-template #elseBlockTitulo>
+		<div class="card-header">{{ titulo2 }}</div>
+	</ng-template>
+	<div class="card-body">
+		<form>
+
+			<div class="form-group row">
+				<label for="nombres" class="col-form-label col-sm-2 text-center">Nombres</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" [(ngModel)]="trabajador.nombres" name="nombres">
+				</div>
+			</div>
+			<br/>
+			<div class="form-group row">
+				<label for="apellidos" class="col-form-label col-sm-2 text-center">Apellidos</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" [(ngModel)]="trabajador.apellidos" name="apellidos">
+				</div>
+			</div>
+			<br/>
+			<div class="form-group row">
+				<label for="email" class="col-form-label col-sm-2 text-center">Email</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" [(ngModel)]="trabajador.email" name="email">
+				</div>
+			</div>
+			<br/>
+			<div class="form-group row">
+				<label for="celular" class="col-form-label col-sm-2 text-center">Celular</label>
+				<div class="col-sm-4">
+					<input type="text" class="form-control" [(ngModel)]="trabajador.celular" name="celular">
+				</div>
+				<label for="edad" class="col-form-label col-sm-2  text-center">Edad</label>
+				<div class="col-sm-4">
+					<input type="text" class="form-control" [(ngModel)]="trabajador.edad" name="edad">
+				</div>
+			</div>
+			<br/>
+			<div class="form-group row">
+				<label for="direccion" class="col-form-label col-sm-2 text-center">Dirección</label>
+				<div class="col-sm-4">
+					<input type="text" class="form-control" [(ngModel)]="trabajador.direccion" name="direccion">
+				</div>
+				<label for="dni" class="col-form-label col-sm-2 text-center">Dni</label>
+				<div class="col-sm-4">
+					<input type="text" class="form-control" [(ngModel)]="trabajador.dni" name="dni">
+				</div>
+			</div>
+			<br/>
+			<div class="form-group row">
+				<div class="col-sm-12 text-center">
+						<button class="btn btn-primary btn-block" (click)='create()' *ngIf="!trabajador.id else elseBlock">Crear</button>
+					<ng-template #elseBlock>
+							<button class="btn btn-primary" (click)='update()'>Editar</button>
+					</ng-template>
+				</div>
+			</div>
+
+		</form>
+	</div>
+</div>
