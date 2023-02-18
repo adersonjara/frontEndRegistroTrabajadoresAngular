@@ -9,7 +9,7 @@ import swal from 'sweetalert2'
 })
 export class TrabajadoresComponent implements OnInit{
 
-	trabajadores: Trabajador[];
+	trabajadores: Trabajador[] = [];
 
 	constructor(private trabajadorService: TrabajadorService){
 
@@ -38,7 +38,7 @@ export class TrabajadoresComponent implements OnInit{
 		  			this.trabajadores = this.trabajadores.filter(trabaj => trabaj !== trabajador)
 		  			swal.fire(
 				      'Eliminado!',
-				      'Se eliminó correctamente.',
+				      `${response.mensaje}`,
 				      'success'
 				    )
 		  		}

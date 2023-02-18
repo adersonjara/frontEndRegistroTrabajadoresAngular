@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
-import { TRABAJADORES } from './clientes.json';
+import { TRABAJADORES } from './trabajadores.json';
 import { Trabajador } from './trabajador';
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { map } from 'rxjs';
+import { map, catchError } from 'rxjs';
+import swal from 'sweetalert2'
+import { Router } from '@angular/router';
 
 @Injectable()
 export class TrabajadorService {
@@ -11,29 +13,60 @@ export class TrabajadorService {
   private urlEndPoint: string = 'http://localhost:8080/api/trabajadores'
   private httpHeaders = new HttpHeaders({'Content-Type': 'application/json'});
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router ) { }
 
-  getTrabajadores(): Observable<Trabajador[]> {
+  getTrabajadores() {
   	// return of(TRABAJADORES);
   	return this.http.get(this.urlEndPoint).pipe(
-  		map(response => response as Trabajador[])
+  		map( (response:any) => response.data as Trabajador[])
   	);
   }
 
-  create(trabajador: Trabajador) : Observable<Trabajador>{
-  	return this.http.post<Trabajador>(this.urlEndPoint,trabajador,{headers: this.httpHeaders})
+  create(trabajador: Trabajador) : Observable<any>{
+  	return this.http.post<any>(this.urlEndPoint,trabajador,{headers: this.httpHeaders}).pipe(
+      catchError(e => {
+
+          if (e.error.status == 400) {
+            return throwError(e);
+          }
+
+          swal.fire(e.error.mensaje,e.error.error,'error');
+          return throwError(e);
+      })
+    );
   }
 
   getTrabajador(id:any): Observable<Trabajador>{
-    return this.http.get<Trabajador>(`${this.urlEndPoint}/${id}`)
+    return this.http.get<Trabajador>(`${this.urlEndPoint}/${id}`).pipe(
+      map((res:any) => res.data as Trabajador),
+      catchError(e => {
+          this.router.navigate(['/trabajadores']);
+          //console.log(e.error);
+          swal.fire('Error al editar', e.error.mensaje,'error');
+          return throwError(e);
+      })
+    );
   }
 
-  update(trabajador: Trabajador): Observable<Trabajador>{
-    return this.http.put<Trabajador>(`${this.urlEndPoint}/${trabajador.id}`, trabajador, {headers: this.httpHeaders})
+  update(trabajador: Trabajador): Observable<any>{
+    return this.http.put<any>(`${this.urlEndPoint}/${trabajador.id}`, trabajador, {headers: this.httpHeaders}).pipe(
+      catchError(e => {
+          if (e.error.status == 400) {
+            return throwError(e);
+          }
+          swal.fire(e.error.mensaje,e.error.error,'error');
+          return throwError(e);
+      })
+    );
   }
 
-  delete(id: number): Observable<Trabajador>{
-    return this.http.delete<Trabajador>(`${this.urlEndPoint}/${id}`, {headers: this.httpHeaders})
+  delete(id: number): Observable<any>{
+    return this.http.delete<any>(`${this.urlEndPoint}/${id}`, {headers: this.httpHeaders}).pipe(
+      catchError(e => {
+          swal.fire(e.error.mensaje,e.error.error,'error');
+          return throwError(e);
+      })
+    );
   }
 
 }

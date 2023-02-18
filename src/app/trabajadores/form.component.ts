@@ -14,6 +14,8 @@ export class FormComponent {
 	public titulo: string = "Registrar Trabajador";
 	public titulo2: string = "Actualizar Trabajador";
 
+	private errores: string[];
+
 	constructor(private trabajadorService: TrabajadorService, 
 				private router: Router,
 				private activatedRoute: ActivatedRoute){}
@@ -33,19 +35,30 @@ export class FormComponent {
 
 	public create(): void{
 		this.trabajadorService.create(this.trabajador)
-			.subscribe(trabajador => {
+			.subscribe(json => {
 				this.router.navigate(['/trabajadores'])
-				swal.fire('Trabajador ',`Registrado con éxito!`,'success')
+				swal.fire('Trabajador ',`${json.mensaje}`,'success')
+			},
+			err => {
+				this.errores = err.error as string[];
+				console.log(err.statuscode);
+				console.log(err.error);
 			}
 		)
 	}
 
 	update(): void{
 		this.trabajadorService.update(this.trabajador)
-		.subscribe( trabajador => {
-			this.router.navigate(['/trabajadores'])
-			swal.fire('Trabajador ',`Actualizado con éxito!`,'success')
-		})
+			.subscribe( json => {
+				this.router.navigate(['/trabajadores'])
+				swal.fire('Trabajador ',`${json.mensaje}`,'success')
+			},
+			err => {
+				this.errores = err.error as string[];
+				console.log(err.statuscode);
+				console.log(err.error);
+			}
+		)
 	}
 
 }
