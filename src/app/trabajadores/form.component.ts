@@ -14,7 +14,7 @@ export class FormComponent {
 	public titulo: string = "Registrar Trabajador";
 	public titulo2: string = "Actualizar Trabajador";
 
-	private errores: string[];
+	public errores: any;
 
 	constructor(private trabajadorService: TrabajadorService, 
 				private router: Router,
@@ -40,9 +40,9 @@ export class FormComponent {
 				swal.fire('Trabajador ',`${json.mensaje}`,'success')
 			},
 			err => {
-				this.errores = err.error as string[];
-				console.log(err.statuscode);
-				console.log(err.error);
+				this.errores = err.error.error;
+				// console.log(err.error.statuscode);
+				// console.log('Errores: ',err.error);
 			}
 		)
 	}
@@ -54,9 +54,9 @@ export class FormComponent {
 				swal.fire('Trabajador ',`${json.mensaje}`,'success')
 			},
 			err => {
-				this.errores = err.error as string[];
-				console.log(err.statuscode);
-				console.log(err.error);
+				this.errores = err.error.error;
+				// console.log(err.statuscode);
+				// console.log(err.error);
 			}
 		)
 	}

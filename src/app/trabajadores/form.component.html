@@ -1,3 +1,8 @@
+<!-- <ul class="alert alert-danger mt-5" *ngIf="errores.length>0">
+	<li *ngFor="let err of errores" class="ms-3">
+		{{ err }}
+	</li>
+</ul> -->
 <div class="card navbar-light mb-3 mt-5" style="background-color: #e3f2fd;">
 	<div class="card-header" *ngIf="!trabajador.id else elseBlockTitulo">{{ titulo }}</div>
 	<ng-template #elseBlockTitulo>
@@ -9,17 +14,9 @@
 			<div class="form-group row">
 				<label for="nombres" class="col-form-label col-sm-2 text-center">Nombres</label>
 				<div class="col-sm-10">
-					<input type="text" class="form-control" [(ngModel)]="trabajador.nombres" name="nombres" required minlength="2" maxlength="120" #nombres="ngModel">
-					<div class="alert alert-danger" *ngIf="nombres.invalid && (nombres.dirty || nombres.touched)">
-						<div *ngIf="nombres.errors?.['required']">
-							Los nombres son requeridos!
-						</div>
-						<div *ngIf="nombres.errors?.['minlength']">
-							Los nombres deben tener como mínimo (2) caracteres
-						</div>
-						<div *ngIf="nombres.errors?.['maxlength']">
-							Los nombres deben tener como máximo (120) caracteres
-						</div>
+					<input type="text" class="form-control" [(ngModel)]="trabajador.nombres" name="nombres" #nombres="ngModel">
+					<div class="alert alert-danger" *ngIf="errores?.nombres">
+						{{ errores.nombres }}
 					</div>
 				</div>
 			</div>
@@ -27,17 +24,9 @@
 			<div class="form-group row">
 				<label for="apellidos" class="col-form-label col-sm-2 text-center">Apellidos</label>
 				<div class="col-sm-10">
-					<input type="text" class="form-control" [(ngModel)]="trabajador.apellidos" name="apellidos" required minlength="2" maxlength="120" #apellidos="ngModel">
-					<div class="alert alert-danger" *ngIf="apellidos.invalid && (apellidos.dirty || apellidos.touched)">
-						<div *ngIf="apellidos.errors?.['required']">
-							Los apellidos son requeridos!
-						</div>
-						<div *ngIf="apellidos.errors?.['minlength']">
-							Los apellidos deben tener como mínimo (2) caracteres
-						</div>
-						<div *ngIf="apellidos.errors?.['maxlength']">
-							Los apellidos deben tener como máximo (120) caracteres
-						</div>
+					<input type="text" class="form-control" [(ngModel)]="trabajador.apellidos" name="apellidos" #apellidos="ngModel">
+					<div class="alert alert-danger" *ngIf="errores?.apellidos">
+						{{ errores.apellidos }}
 					</div>
 				</div>
 			</div>
@@ -45,20 +34,9 @@
 			<div class="form-group row">
 				<label for="email" class="col-form-label col-sm-2 text-center">Email</label>
 				<div class="col-sm-10">
-					<input type="text" class="form-control" [(ngModel)]="trabajador.email" name="email" required email minlength="4" maxlength="255" #email="ngModel">
-					<div class="alert alert-danger" *ngIf="email.invalid && (email.dirty || email.touched)">
-						<div *ngIf="email.errors?.['email']">
-							El email debe ser válido!
-						</div>
-						<div *ngIf="email.errors?.['required']">
-							El email es requerido!
-						</div>
-						<div *ngIf="email.errors?.['minlength']">
-							El email debe tener como mínimo (2) caracteres
-						</div>
-						<div *ngIf="email.errors?.['maxlength']">
-							El email debe tener como máximo (255) caracteres
-						</div>
+					<input type="text" class="form-control" [(ngModel)]="trabajador.email" name="email" #email="ngModel">
+					<div class="alert alert-danger" *ngIf="errores?.email">
+						{{ errores.email }}
 					</div>
 				</div>
 			</div>
@@ -66,26 +44,16 @@
 			<div class="form-group row">
 				<label for="celular" class="col-form-label col-sm-2 text-center">Celular</label>
 				<div class="col-sm-4">
-					<input type="text" class="form-control" [(ngModel)]="trabajador.celular" name="celular" minlength="9" maxlength="9" #celular="ngModel">
-					<div class="alert alert-danger" *ngIf="celular.invalid && (celular.dirty || celular.touched)">
-						<div *ngIf="celular.errors?.['minlength']">
-							El celular debe tener como mínimo (9) números
-						</div>
-						<div *ngIf="celular.errors?.['maxlength']">
-							El celular debe tener como máximo (9) números
-						</div>
+					<input type="text" class="form-control" [(ngModel)]="trabajador.celular" name="celular" #celular="ngModel">
+					<div class="alert alert-danger" *ngIf="errores?.celular">
+						{{ errores.celular }}
 					</div>
 				</div>
 				<label for="edad" class="col-form-label col-sm-2  text-center">Edad</label>
 				<div class="col-sm-4">
-					<input type="text" class="form-control" [(ngModel)]="trabajador.edad" name="edad" minlength="1" maxlength="3" #edad="ngModel">
-					<div class="alert alert-danger" *ngIf="edad.invalid && (edad.dirty || edad.touched)">
-						<div *ngIf="edad.errors?.['minlength']">
-							La edad debe tener como mínimo (1) dígito
-						</div>
-						<div *ngIf="edad.errors?.['maxlength']">
-							La edad debe tener como máximo (3) dígitos
-						</div>
+					<input type="text" class="form-control" [(ngModel)]="trabajador.edad" name="edad" #edad="ngModel">
+					<div class="alert alert-danger" *ngIf="errores?.edad">
+						{{ errores.edad }}
 					</div>
 				</div>
 			</div>
@@ -93,29 +61,16 @@
 			<div class="form-group row">
 				<label for="direccion" class="col-form-label col-sm-2 text-center">Dirección</label>
 				<div class="col-sm-4">
-					<input type="text" class="form-control" [(ngModel)]="trabajador.direccion" name="direccion" minlength="4" maxlength="255" #direccion="ngModel">
-					<div class="alert alert-danger" *ngIf="direccion.invalid && (direccion.dirty || direccion.touched)">
-						<div *ngIf="direccion.errors?.['minlength']">
-							La direccion debe tener como mínimo (4) caracteres
-						</div>
-						<div *ngIf="direccion.errors?.['maxlength']">
-							La direccion debe tener como máximo (255) caracteres
-						</div>
+					<input type="text" class="form-control" [(ngModel)]="trabajador.direccion" name="direccion" #direccion="ngModel">
+					<div class="alert alert-danger" *ngIf="errores?.direccion">
+						{{ errores.direccion }}
 					</div>
 				</div>
 				<label for="dni" class="col-form-label col-sm-2 text-center">Dni</label>
 				<div class="col-sm-4">
-					<input type="text" class="form-control" [(ngModel)]="trabajador.dni" name="dni" required minlength="8" maxlength="8" #dni="ngModel">
-					<div class="alert alert-danger" *ngIf="dni.invalid && (dni.dirty || dni.touched)">
-						<div *ngIf="dni.errors?.['required']">
-							El dni es requerido!
-						</div>
-						<div *ngIf="dni.errors?.['minlength']">
-							La dni debe tener como mínimo (8) caracteres
-						</div>
-						<div *ngIf="dni.errors?.['maxlength']">
-							La dni debe tener como máximo (8) caracteres
-						</div>
+					<input type="text" class="form-control" [(ngModel)]="trabajador.dni" name="dni" #dni="ngModel">
+					<div class="alert alert-danger" *ngIf="errores?.dni">
+						{{ errores.dni }}
 					</div>
 				</div>
 			</div>

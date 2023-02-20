@@ -26,7 +26,7 @@
     			<td>{{ trabajador.edad }}</td>
     			<td>{{ trabajador.direccion }}</td>
     			<td>{{ trabajador.dni }}</td>
-    			<td>{{ trabajador.createAt | date:'dd-MM-yyyy , HH:mm' }}</td>
+    			<td>{{ trabajador.createAt }}</td>
                 <td>
                     <button type="button" name="button" [routerLink]="['/trabajadores/form', trabajador.id]" class="btn btn-primary btn-sm">Editar</button>
                     <button type="button" name="eliminar" (click)="delete(trabajador)" class="btn btn-danger btn-sm">Eliminar</button>

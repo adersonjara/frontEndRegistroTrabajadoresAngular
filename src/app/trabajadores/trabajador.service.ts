@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { formatDate } from '@angular/common';
 import { TRABAJADORES } from './trabajadores.json';
 import { Trabajador } from './trabajador';
 import { Observable, of, throwError } from 'rxjs';
@@ -15,10 +16,20 @@ export class TrabajadorService {
 
   constructor(private http: HttpClient, private router: Router ) { }
 
-  getTrabajadores() {
+  getTrabajadores(): Observable<Trabajador[]> {
   	// return of(TRABAJADORES);
   	return this.http.get(this.urlEndPoint).pipe(
-  		map( (response:any) => response.data as Trabajador[])
+  		map( (response:any) => {
+          let trabajadores = response.data as Trabajador[];
+          return trabajadores.map(trabajador => {
+            trabajador.nombres = trabajador.nombres.toUpperCase();
+            trabajador.apellidos = trabajador.apellidos.toUpperCase();
+            
+            trabajador.createAt = formatDate(trabajador.createAt, 'EEEE dd, MMMM yyyy', 'es');
+            return trabajador;
+          })
+        }
+      )
   	);
   }
 
@@ -26,11 +37,11 @@ export class TrabajadorService {
   	return this.http.post<any>(this.urlEndPoint,trabajador,{headers: this.httpHeaders}).pipe(
       catchError(e => {
 
-          if (e.error.status == 400) {
+          if (e.status == 400) {
             return throwError(e);
           }
 
-          swal.fire(e.error.mensaje,e.error.error,'error');
+          swal.fire(e.error.mensaje,'','error');
           return throwError(e);
       })
     );
@@ -54,7 +65,7 @@ export class TrabajadorService {
           if (e.error.status == 400) {
             return throwError(e);
           }
-          swal.fire(e.error.mensaje,e.error.error,'error');
+          // swal.fire(e.error.mensaje,e.error.error,'error');
           return throwError(e);
       })
     );

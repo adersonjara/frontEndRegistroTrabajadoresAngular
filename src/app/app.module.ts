@@ -11,6 +11,11 @@ import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { FormComponent } from './trabajadores/form.component';
 import { FormsModule } from '@angular/forms';
+import { registerLocaleData } from '@angular/common';
+import localeEs from '@angular/common/locales/es';
+
+
+registerLocaleData(localeEs,'es');
 
 const routes: Routes = [
 	{path: '', redirectTo: '/trabajadores', pathMatch: 'full'},
