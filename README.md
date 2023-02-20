@@ -1,5 +1,8 @@
 # TrabajadoresApp
 
+Esta es una aplicación front-end hecha en Angular para el registro de los trabajadores. Consume una API REST FULL hecha en Spring Boot, aquí el repositorio:
+https://github.com/adersonjara/backEndApiRegistroTrabajadoresSpringBoot
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.1.5.
 
 ## Development server
